@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+  
+
+
+
+  <!--enctype="multipart/form-data" allows to upload a file-->
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div style="background:white" class="text-center">
+    <h1> Analyze Face Emotion</h1>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('index') }}">
+      {{form.hidden_tag()}} <!--CSRF token-->
+      <!-- <label for="url-input">- Select / Drag Image -</label> -->
+      <div class="file-upload-wrapper" id="button">
+        <input type="file" data-toggle="tooltip" title="will Process images with only 1 face" id="input-file-now" name="file" class="file-upload" />
+        <button type="submit" id="button" data-toggle="tooltip" title="will Process images with only 1 face">Submit</button>
+        <div id="message"></div>
+      </div>
+      
+    </form>
+
+  
+  
+  <!-- DELETE ALL BUTTON -->
+  <br>
+  <br>
+  <div class="d-flex justify-content-center align-items-center">
+    <form method="post" action="{{ url_for('deleteall_')}}">
+      <!-- <input class="btn" type="submit" name="delete" value="Delete"> -->
+      <button type="submit" class="btn btn-sm btn-warning">delete all pictures</button> 
+    </form>
+  </div>
+
+  </div>
+</div>
+
+
+  
+<!-- UNROLL TABLE ROWS:  -->
+<br>
+<div>
+  {%for pp in pic_pred %}
+    <div class="col-md-3 mt-3">
+          <h5>Emotion: {{pp[1]}}</h5>
+          <img src='{{pp[0]}}' >
+          <a href="/delete/{{''.join(pp[0].split('/')[-1:])}}" class="btn btn-danger btn-xs">DELETE<span class="glyphicon glyphicon-trash"></span></a>
+    </div>
+  {%endfor%}
+</div>
+
+<progress value="100" max="100"></progress>
+
+{% endblock %}

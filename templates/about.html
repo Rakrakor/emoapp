@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>About the project</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <img src='static/pictures/happy.png' class="img-fluid rounded">
+            <img src='static/pictures/fear.png' class="img-fluid rounded">
+            <img src='static/pictures/surprise.png' class="img-fluid rounded">
+            <img src='static/pictures/angry.png' class="img-fluid rounded">
+            <img src='static/pictures/sad.png' class="img-fluid rounded">
+            <img src='static/pictures/disgust.png' class="img-fluid rounded">
+            <img src='static/pictures/neutral.png' class="img-fluid rounded">
+            
+        </div>
+        <div class="col-md-4">
+            <h2>GOAL</h2>
+            <br>
+            <p style="text-align: justify;">This is a capstone project achieved in the context of <a href="https://concordiabootcamps.ca/courses/data-science-full-time/">CONCORDIA UNIVERSITY bootcamp in DataSciences </a>.<br> 
+                The goal was to use a Convolutional Neural Network to detect and label emotions from the image of a human face.<br>
+                7 types of emotion can be evaluated by the CNN model: [angry],[disgust],[fear],[happy],[sad],[neutral],[surprise]
+            </p>
+            
+            <p style="text-align: justify;"> The project was implemented by architecturing a Convolutional Neural Network and training it to recognize human Facial Emotions.
+                The CNN Architecture is based on a smaller version of VGG.
+                The training dataset was taken from the FER2013 dataset which is free to access and has over 28000 pictures. 
+                Upon filtering the most relevant pictures, the CNN was trained on 19774 pictures from this dataset.
+             </p>
+            
+        </div>
+        
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>PERFORMANCES</h2>
+            <div class="col-md-10">
+                <img src='static/pictures/training_Validation_accuracy.png' class="img-fluid rounded" width="800" height="800"> 
+                <img src='static/pictures/classification.png' class="img-fluid rounded" width="800" height="800">
+                <br>
+                
+            </div>
+            <p style="text-align: justify;">The total f1-score for this CNN on the FER-2013 dataset is at 61%. 
+                A good score would be over 90%. The score obtained here is not high, but still very close from the score obtained by the best competing teams on this dataset:
+                <blockquote cite="http://cs230.stanford.edu">
+                    <b><i>"It is one of the more challenging datasets with human-level accuracy only at 65±5% and the highest performing published works achieving 75.2% test accuracy."</i></b>
+                    <a href="http://cs230.stanford.edu"><i>http://cs230.stanford.edu</i></a> <br>
+                  </blockquote> 
+                   Indeed, this dataset is rather challenging due to the way the images can be mislabelled and due to the various non-uniform poses taken by the people into pictures.  </p>
+                <p style="text-align: justify;"> We can notice that the training accuracy is 73% while the validation accuracy is at 61%. 
+                    This means that while the training accuracy could be improved by having a better dataset ( persons pose, labelling correctness, image resolution, etc.. ) or a deeper CNN to get more features extraction,
+                    the validation accuracy could also be improved by further reducing the overfitting .
+                </p>
+        </div>
+        
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>IMPLEMENTATION</h2>
+            <br>
+        </div>
+        <br>
+        <div class="col-lg-12">
+            <h5><li><u>CNN Architecture:</u> 10 Layers</li></h5>
+            <br>
+            <div >
+                <img src='static/pictures/CNN_Layers.png' class="img-fluid rounded" width="1132" height="456">
+                <p  style="text-align: justify;"> The 1st part of the CNN architecture is composed of 4 parts having similar Layers: Conv2D + Batch_Normalization + MaxPooling. The goal of this 1st part is to extract the features from the image. The longer the network, the more features can be extracted.
+                    <br>The 2nd part of the CNN architecture is dedicated to the classifier. It is composed of a flattening layer which converts its input into a single dimension. Itself followed by the  2 dense fully connected layers.
+                    <br>The very last layer has 7 classes only to match the numbers of emotions to be identified. 
+                    <br>In order to improve the accuracy, the CNN was tuned using Keras_tuner to better adapt its layers input/outputs hyper-parameters.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-10">
+                <img src='static/pictures/CNN_params.png' class="img-fluid rounded" width="800" height="800">
+            </div>
+        </div>  
+        
+        <br>
+
+        <div class="col-md-6">
+            <h5><li><u>Pre-Processing:</u> CROP + BW</li></h5>
+            
+            <div class="col-md-12">
+                <p style="text-align: justify;"><b>TRAINING/TESTING:</b> The original pictures are 48,48 in black and white. Using the Dlib library and OpenCV, and in order to improve the training set, the dataset was filtered on whether the images had a detected face on it.
+                    If no face was detected, or the person's pose in the picture did not allow for a face detection, the picture was rejected from the training set.
+                    If a face was detected, the image was also cropped to best fit the face of the person, and to make sure the background would not be a source of noise during the training.
+                    Grayscale with only 1 channel was used as image input to the CNN.
+                </p>
+                <p style="text-align: justify;"> <b>USER INPUT:</b> The same pre-processing approach is then used in this application. While the user would pass an RGB unfocused image to the CNN, the pre-processing function turns it to black and white then crops the picture to fit the face.
+                </p>    
+                <p style="text-align: justify;"> NOTE: Any picture with no face or more than 1 face is rejected from evaluation in this current version.</p>
+                <div class="col-sm-6">
+                    <img src='static/pictures/demo_color_original.png' class="img-fluid rounded" width="300" height="133">
+                    <b>⬇ ⬇ ⬇ ⬇ ⬇ ⬇ ⬇ ⬇ ⬇</b>
+                    <img src='static/pictures/demo_BW_cropped.png' class="img-fluid rounded" width="150" height="68">
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>CONCLUSION AND FUTURE IMPROVEMENTS</h2>
+            <p  style="text-align: justify;"> This project was not straighforward as several options of CNN architecture were tested prior selecting the current model (around 20).
+                Among them, a simple KNN (K-NearestNeighbors) approach was considered, along with Pre-trained/ Pre-architectured models such as VGG16, ResNet50V2, MobileNetV2. 
+                But the drawback on reusing pre-trained models is that the weights (e.g imagenet) are not fit for the specific purpose of extracting the features of a human face and its related emotion traits.
+                So, one of the main challenge faced while re-training an entire a pre-architectured CNN, was the limitation of computing power, and the significant training time necessary to update a CNN weights.
+                For example, a large CNN such as VGG16 with 138,4 Millions trainable parameters, would take up a couple of hours to train on 28000 images. 
+                To reduce the training time, the dataset was then reduced to 4626 images. 
+                During this 1st phase, the best performing pre-architectured CNN was MobileNetV2 which only has 3.5Millions trainable parameters. But it only yielded a 47% accuracy on a reduced dataset of 4636 images.
+                In the 2nd phase, a better trade-off between accuracy vs training time had to be made: in order to improve the accuracy, the entire dataset was necessary for the training but since training on this amount of images would take too long, 
+                a smaller CNN was required.
+                The CNN in question is the one presented in this page.
+                It only has over 2.23 Millions trainable parameters. 
+                Its tunning took 05h 37m 47sec while the training on 19774 images only took 1H45min with the computing resources available at that time.
+               </p>
+            <p style="text-align: justify;"> To achieved this project a small and tuned CNN was required,  along with a pre-processing step consisting grayscaling, detecting and cropping the faces.
+                The main hyper-parameters which had an influence on the accuracy were:
+                - the quality of the dataset (labelling, person pose, picture resolution). 
+                - The amount of the training images 
+                - The number of epoch
+                - The batch size
+                - The tuned CNN perceptrons. 
+                
+            </p>
+            <p style="text-align: justify;"> Further improvement on this project are possible. A first option would be to try to improve the training accuracy by 
+                adding more layer to extract the finest features. To improve the validation accuracy, a technic would be to reduce the overfitting by adding dropout layers/ regulizers, batch_normalization layers 
+                (although already assessed on the current CNN during its tunning phase).
+                One of the option is to re-train the MobileNetV2 on the entire dataset this time with more computing power. 
+                It seems also interesting to note that mixing datasets such as FER2013, JAFFE, CK+, etc... could lead to accuracy improvement.
+            
+            </p>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

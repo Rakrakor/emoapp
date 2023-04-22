@@ -1,0 +1,41 @@
+
+.navbar {
+  background-color: rgb(1,10,17);
+  height: 70px; /* replace with the actual height of your navbar */
+}
+
+.navbar img {
+  height: 60px; /* set the height of the image to 100% of the height of the navbar */
+}
+
+.sub_div {
+    position: sticky; 
+    bottom: 0px;
+    width: 100%;
+}
+
+.center {
+    text-align: center;
+    
+  }
+
+  .container{
+    width: 100%;
+  }
+
+  .containerf1 {
+    height: 100vh;
+}
+
+/* Position the form container at the top of the page */
+.containerf11 {
+    margin-top: 33%;
+}
+
+  progress[value="100"] {
+    display: none;
+  }
+
+#message{
+  font-size: 10px;
+}

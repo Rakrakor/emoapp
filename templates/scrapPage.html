@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <div style="background:white" class="text-center">
+    <h1> SCRAP website Emotions</h1>
+    <form method="POST" action="{{ url_for('scrap') }}">
+      {{form.hidden_tag()}} <!--CSRF token-->
+      <div id="button">
+      <label for="url-input">URL:</label>
+      <input type="url" data-toggle="tooltip" title="will Process images with only 1 face" id="button" name="url" required>
+      <button type="submit" id="button" data-toggle="tooltip" title="will Process images with only 1 face" onclick="toggleMessage()">Submit</button>
+      <div id="message"> (the analysis can take up to several minutes)</div>
+    </div>
+    </form>
+    
+  
+  <!-- DELETE ALL BUTTON -->
+  <br>
+  <br>
+  <div class="d-flex justify-content-center align-items-center">
+    <form method="post" action="{{ url_for('deleteall')}}">
+      <!-- <input class="btn" type="submit" name="delete" value="Delete"> -->
+      <button type="submit"  class="btn btn-warning">delete all pictures</button>
+      <div id="message"></div>
+  </form>
+  
+  </div>
+
+  </div>
+</div>
+
+
+
+
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        {% for col in titles %}
+        <th scope="col">{{col}}</th>
+        {% endfor %}
+      </tr>
+      <tr>
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in row_data %}
+      <tr>
+        
+        <td>{{row[0]}}</td>
+        <td> <img src={{row[1]}} alt={{row[1]}} width="130" height="100"> </td>
+        <td><b>{{row[2]}}</b></td>
+        <!-- <td><a href="/deleteimg/{{row[3]}}" class="btn btn-danger btn-xs">DELETE<span class="glyphicon glyphicon-trash"></span></a></td> -->
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+
+
+
+
+
+{% endblock %}
