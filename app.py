@@ -6,10 +6,10 @@
 #  pipreqs
 
 # -------------------- IMPORTS ------------------ #
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for #, flash, request
 from flask_wtf import FlaskForm
-from wtforms import FileField, StringField, PasswordField, SubmitField, BooleanField, URLField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, URL
+from wtforms import FileField, StringField, SubmitField #PasswordField, BooleanField, URLField
+from wtforms.validators import DataRequired, URL #, Length, Email, EqualTo
 from werkzeug.utils import secure_filename
 import os
 from wtforms.validators import InputRequired
