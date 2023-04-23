@@ -20,7 +20,7 @@ import shutil
 
 
 # DS
-# import numpy as np
+import numpy as np
 import pandas as pd
 # NN libraries
 import tensorflow as tf
